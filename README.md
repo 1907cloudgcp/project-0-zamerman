@@ -29,13 +29,14 @@
 # Router Project
 
 ## Create a bank that users can interact with
-* As a computer I can ask for an ip address.
-* As a computer I can register ports with my address.
+* As a computer I can ask for an ip address, using a name or MAC address.
+* As a computer I can register ports with my ip address.
 * As a computer I can see all ports registered to me.
 * As a computer I can see any traffic sent to me.
 * As an outside device I can send traffic to an address.
 * As an outside device I can send traffic to a port.
 * As a router admin I can see all addresses and ports registered to them.
+* As a router admin I can change any port registration
 
 ## Requirements
 * Data is persisted (saved) to any kind of physical flat file through IO
