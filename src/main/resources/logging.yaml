@@ -1,0 +1,31 @@
+version: 1
+disable_existing_loggers: False
+formatters:
+    simple:
+        format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+
+    all:
+        class: logging.handlers.RotatingFileHandler
+        level: DEBUG
+        formatter: simple
+        filename: /var/log/my_script/all.log
+        maxBytes: 10485760
+
+    errors:
+        class: logging.handlers.RotatingFileHandler
+        level: ERROR
+        formatter: simple
+        filename: /var/log/my_script/error.log
+        maxBytes: 10485760
+
+root:
+    #Change this value only to change your whole application top logging LEVEL
+    level: DEBUG
+    handlers: [console, all, errors]
