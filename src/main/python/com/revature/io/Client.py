@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
+
 class Client():
+    """
+    Data class which contains fields and methods for Client's username,
+    password, balance, and transactions.
+    """
+
     def __init__(self, username, password, balance, transactions):
         self.__username = username
         self.__password = password
