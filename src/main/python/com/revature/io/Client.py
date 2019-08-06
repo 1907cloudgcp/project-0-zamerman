@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class Client():
     def __init__(self, username, password, balance, transactions):
         self.__username = username
