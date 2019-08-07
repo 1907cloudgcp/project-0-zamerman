@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+import logging.config
 import yaml
 
 class Client():
