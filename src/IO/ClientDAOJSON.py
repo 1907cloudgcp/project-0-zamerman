@@ -1,5 +1,6 @@
-from .ClientDAO import ClientDAO
-from .Client import Client
+from IO.ClientDAO import ClientDAO
+from IO.Client import Client
+from error.TwinClientError import TwinClientError
 import json
 import sys
 import os
@@ -42,7 +43,9 @@ class ClientDAOJSON(ClientDAO):
         clients = self.get_clients()
 
         # check if the client is already in the vault before adding
-        if new_client not in clients:
+        if new_client in clients:
+            raise TwinClientError('Client with same username already exists')
+        else:
             clients.append(new_client)
 
         # write the updated vault list to the vault
@@ -54,7 +57,7 @@ class ClientDAOJSON(ClientDAO):
         """
         changes a client in the vault unless a client with the same username as
         new_client already exists
-        
+
         always deletes old client
 
         clients are uniquely identified by username so even if two clients with
