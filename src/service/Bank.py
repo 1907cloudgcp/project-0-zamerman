@@ -7,6 +7,12 @@ class Bank():
         self.vault_access = ClientDAOJSON(vault_path)
         self.client = Client()
 
+    def current_session(self):
+        return self.client.get_username()
+
+    def logout_session(self):
+        self.client = Client()
+
     def register(self, client):
         self.vault_access.add_client(client)
         self.client = client

@@ -1,24 +1,32 @@
 [
     {
         "username": "aamerman",
+        "balance": 0,
         "password": "password",
-        "transactions": [],
-        "balance": 0
+        "transactions": []
     },
     {
         "username": "mamerman",
+        "balance": 0,
         "password": "password",
-        "transactions": [],
-        "balance": 0
+        "transactions": []
+    },
+    {
+        "username": "mlee",
+        "balance": "10000",
+        "password": "zwa62094",
+        "transactions": []
     },
     {
         "username": "zamerman",
+        "balance": 1500,
         "password": "password",
         "transactions": [
             "date: deposited: $1000",
             "date: deposited: $1000",
-            "date: withdrawn: $500"
-        ],
-        "balance": 2000
+            "date: withdrawn: $500",
+            "date: deposited: $500",
+            "date: withdrawn: $1000"
+        ]
     }
 ]
