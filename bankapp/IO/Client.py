@@ -10,13 +10,71 @@ class Client():
     password, balance, and transactions.
     """
 
-    def __init__(self, username, password, balance, transactions):
+    def __init__(self, username="", password="", balance=0, transactions=[]):
         # Set Client fields
-        self.__username = username
-        self.__password = password
-        self.__balance = balance
-        self.__transactions = transactions
+        self.username = username
+        self.password = password
+        self.balance = balance
+        self.transactions = transactions
 
+    def get_username(self):
+        """
+        Get client's username
+        """
+        __get_logger().info('Client username requested')
+        return self.username
+
+    def set_username(self, username):
+        """
+        Set client's username
+        """
+        self.username = username
+        __get_logger().info('Client username changed to ' + username)
+
+    def get_password(self):
+        """
+        Get client's password
+        """
+        __get_logger().info('Client password requested')
+        return self.password
+
+    def set_password(self, password):
+        """
+        Set client's password
+        """
+        self.password = password
+        __get_logger().info('Client password changed to ' + password)
+
+    def get_balance(self):
+        """
+        Get client's balance
+        """
+        __get_logger().info('Client balance requested')
+        return self.balance
+
+    def set_balance(self, balance):
+        """
+        Set client's balance
+        """
+        self.balance = balance
+        __get_logger().info('Client balance changed to ' + balance)
+
+    def get_transactions(self):
+        """
+        Get client's transactions
+        """
+        __get_logger().info('Client transactions requested')
+        return self.transactions
+
+    def set_transactions(self, transactions):
+        """
+        Set client's transactions
+        """
+        self.transactions = transactions
+        __get_logger().info('Client transactions changed')
+
+    @staticmethod
+    def __get_logger():
         # Load logging configuration yaml file
         config_path = '''/vagrant/project-0-zamerman/bankapp/resources/logging.yaml'''
         config = ''
@@ -25,65 +83,4 @@ class Client():
         logging.config.dictConfig(config)
 
         # Create Client logger
-        self.__logger = logging.getLogger(__name__)
-
-        # Send info log upon Client creation
-        self.__logger.info('Client created; ' +
-                           'username: ' + username +
-                           '; password: ' + password)
-
-    def get_username(self):
-        """
-        Get client's username
-        """
-        self.__logger.info('Client username requested')
-        return self.__username
-
-    def set_username(self, username):
-        """
-        Set client's username
-        """
-        self.__username = username
-        self.__logger.info('Client username changed to ' + username)
-
-    def get_password(self):
-        """
-        Get client's password
-        """
-        self.__logger.info('Client password requested')
-        return self.__password
-
-    def set_password(self, password):
-        """
-        Set client's password
-        """
-        self.__password = password
-        self.__logger.info('Client password changed to ' + password)
-
-    def get_balance(self):
-        """
-        Get client's balance
-        """
-        self.__logger.info('Client balance requested')
-        return self.__balance
-
-    def set_balance(self, balance):
-        """
-        Set client's balance
-        """
-        self.__balance = balance
-        self.__logger.info('Client balance changed to ' + balance)
-
-    def get_transactions(self):
-        """
-        Get client's transactions
-        """
-        self.__logger.info('Client transactions requested')
-        return self.__transactions
-
-    def set_transactions(self, transactions):
-        """
-        Set client's transactions
-        """
-        self.__transactions = transactions
-        self.__logger.info('Client transactions changed')
+        return logging.getLogger(__name__)
