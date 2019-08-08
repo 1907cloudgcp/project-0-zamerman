@@ -1,1 +1,24 @@
-[{"balance": 0, "username": "zamerman", "password": "password", "transactions": []}, {"balance": 0, "username": "aamerman", "password": "password", "transactions": []}]
+[
+    {
+        "username": "aamerman",
+        "password": "password",
+        "transactions": [],
+        "balance": 0
+    },
+    {
+        "username": "mamerman",
+        "password": "password",
+        "transactions": [],
+        "balance": 0
+    },
+    {
+        "username": "zamerman",
+        "password": "password",
+        "transactions": [
+            "date: deposited: $1000",
+            "date: deposited: $1000",
+            "date: withdrawn: $500"
+        ],
+        "balance": 2000
+    }
+]

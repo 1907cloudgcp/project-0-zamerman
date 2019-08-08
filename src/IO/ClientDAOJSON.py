@@ -1,6 +1,6 @@
 from IO.ClientDAO import ClientDAO
 from IO.Client import Client
-from error.TwinClientError import TwinClientError
+from error.Error import ClientSetupError
 import json
 import sys
 import os
@@ -44,16 +44,16 @@ class ClientDAOJSON(ClientDAO):
 
         # check if the client is already in the vault before adding
         if new_client in clients:
-            raise TwinClientError('Client with same username already exists')
+            raise ClientSetupError('Client with same username already exists')
         else:
             clients.append(new_client)
 
         # write the updated vault list to the vault
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
-            json.dump(client_dicts, f)
+            json.dump(client_dicts, f, indent=4)
 
-    def update_client(self, client, new_client):
+    def update_client(self, client):
         """
         changes a client in the vault unless a client with the same username as
         new_client already exists
@@ -72,13 +72,15 @@ class ClientDAOJSON(ClientDAO):
         clients.remove(client)
 
         # check if the updated client is already in the vault before adding
-        if new_client not in clients:
-            clients.append(new_client)
+        if client in clients:
+            raise ClientSetupError('Client with same username already exists')
+        else:
+            clients.append(client)
 
         # write the updated vault list to the vault
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
-            json.dump(client_dicts, f)
+            json.dump(client_dicts, f, indent=4)
 
 
     def delete_client(self, client):
@@ -99,4 +101,4 @@ class ClientDAOJSON(ClientDAO):
         # write the updated vault list to the vault
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
-            json.dump(client_dicts, f)
+            json.dump(client_dicts, f, indent=4)
