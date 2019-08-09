@@ -54,6 +54,7 @@ class Bank():
 
     def view_transactions(self):
         if self.client in self.vault_access.get_clients():
-            print(self.client.get_transactions())
+            for transaction in self.client.get_transactions():
+                print(transaction)
         else:
             raise SessionError('Not logged in or registered with bank')

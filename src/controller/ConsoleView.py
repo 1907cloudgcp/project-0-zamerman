@@ -11,7 +11,8 @@ logout          logout of the bank
 balance         view session balance
 deposit         deposit into account
 withdraw        withdraw from account
-quit            exit the program
+transactions    view past transactions
+quit/exit       exit the program
 '''
 
 
@@ -25,8 +26,7 @@ class ConsoleView():
             print('\nWelcome to {redacted} Bank of {redacted}!')
             print('For a list of commands input `help`')
             self.ran = True
-        response = input(self.bank.current_session() + ":")
-        print(response)
+        response = input("$" + self.bank.current_session() + ":")
         return self.parse_response(response)
 
     def parse_response(self, response):
@@ -45,8 +45,10 @@ class ConsoleView():
             self.deposit_event()
         elif response == 'withdraw':
             self.withdraw_event()
-        elif response == 'quit':
-            return None
+        elif response == 'transactions':
+            self.view_transactions_event()
+        elif response == 'quit' or response == 'exit':
+            self.quit_event()
         else:
             print('invalid command')
             return self.run()
@@ -94,3 +96,13 @@ class ConsoleView():
         except SessionError as e:
             print("SessionError:" + e.strerror)
         return self.run()
+
+    def view_transactions_event(self):
+        try:
+            self.bank.view_transactions()
+        except SessionError as e:
+            print("SessionError:" + e.strerror)
+        return self.run()
+
+    def quit_event(self):
+        return None
