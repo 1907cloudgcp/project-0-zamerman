@@ -2,7 +2,7 @@ from IO.Client import Client
 from IO.ClientDAOJSON import ClientDAOJSON
 from error.Error import LoginError, SessionError
 
-class Bank():
+class BankSession():
     def __init__(self, vault_path):
         self.vault_access = ClientDAOJSON(vault_path)
         self.client = Client()
