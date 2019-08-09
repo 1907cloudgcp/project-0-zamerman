@@ -1,4 +1,4 @@
-from service.Bank import Bank
+from service.BankSession import BankSession
 from IO.Client import Client
 from error.Error import SessionError, ClientSetupError
 

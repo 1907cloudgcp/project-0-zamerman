@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from controller.ConsoleView import ConsoleView
-from service.Bank import Bank
+from service.BankSession import BankSession
 
 '''
 This is your main script, this should call several other scripts within your
@@ -9,8 +9,8 @@ packages.
 
 
 def main():
-	bank = Bank('/vagrant/project-0-zamerman/data/vault.json')
-	console = ConsoleView(bank)
+	bank_session = BankSession('/vagrant/project-0-zamerman/data/vault.json')
+	console = ConsoleView(bank_session)
 	console.run()
 
 
