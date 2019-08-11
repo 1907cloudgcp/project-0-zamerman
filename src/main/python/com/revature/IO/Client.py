@@ -1,4 +1,4 @@
-from .decorators import secure_string
+from .decorators import secure_string, requires_int
 
 
 class Client():
@@ -52,6 +52,7 @@ class Client():
         """
         return self.__balance
 
+    @requires_int
     def set_balance(self, balance):
         """
         Set client's balance
