@@ -1,10 +1,9 @@
-from IO.ClientDAO import ClientDAO
-from IO.Client import Client
-from error.Error import ClientSetupError
+from .ClientDAO import ClientDAO
+from .Client import Client
 import json
 import sys
 import os
-
+from .IOErrors import ClientSetupError
 
 class ClientDAOJSON(ClientDAO):
     """

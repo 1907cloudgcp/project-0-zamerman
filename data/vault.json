@@ -1,8 +1,14 @@
 [
     {
         "_Client__username": "zamerman",
-        "_Client__balance": 10000,
         "_Client__transactions": [],
+        "_Client__balance": 10000,
         "_Client__password": "password"
+    },
+    {
+        "_Client__username": "aamerman",
+        "_Client__transactions": [],
+        "_Client__balance": 10000,
+        "_Client__password": "Ara71201"
     }
 ]

@@ -1,4 +1,4 @@
-from error.Error import ShortUsernameError
+from .decorators import secure_string
 
 
 class Client():
@@ -26,16 +26,12 @@ class Client():
         """
         return self.__username
 
+    @secure_string
     def set_username(self, username):
         """
         Set client's username
         """
-        if username == '':
-            self.__username = username
-        elif len(username) < 8:
-            raise ShortUsernameError
-        else:
-            self.__username = username
+        self.__username = username
 
     def get_password(self):
         """
@@ -43,6 +39,7 @@ class Client():
         """
         return self.__password
 
+    @secure_string
     def set_password(self, password):
         """
         Set client's password
