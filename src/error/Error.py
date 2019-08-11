@@ -11,3 +11,7 @@ class LoginError(Error):
 
 class SessionError(Error):
     pass
+
+class ShortUsernameError(Error):
+    def __init__(self):
+        self.strerror = "Entered username is not long enough"

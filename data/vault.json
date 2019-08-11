@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "_Client__username": "zamerman",
+        "_Client__balance": 10000,
+        "_Client__transactions": [],
+        "_Client__password": "password"
+    }
+]

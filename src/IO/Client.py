@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+from error.Error import ShortUsernameError
 
 
 class Client():
@@ -15,62 +15,67 @@ class Client():
         """
 
         # set Client fields
-        self.username = username
-        self.password = password
-        self.balance = balance
-        self.transactions = transactions
+        self.set_username(username)
+        self.set_password(password)
+        self.set_balance(balance)
+        self.set_transactions(transactions)
 
     def get_username(self):
         """
         Get client's username
         """
-        return self.username
+        return self.__username
 
     def set_username(self, username):
         """
         Set client's username
         """
-        self.username = username
+        if username == '':
+            self.__username = username
+        elif len(username) < 8:
+            raise ShortUsernameError
+        else:
+            self.__username = username
 
     def get_password(self):
         """
         Get client's password
         """
-        return self.password
+        return self.__password
 
     def set_password(self, password):
         """
         Set client's password
         """
-        self.password = password
+        self.__password = password
 
     def get_balance(self):
         """
         Get client's balance
         """
-        return self.balance
+        return self.__balance
 
     def set_balance(self, balance):
         """
         Set client's balance
         """
-        self.balance = balance
+        self.__balance = balance
 
     def get_transactions(self):
         """
         Get client's transactions
         """
-        return self.transactions
+        return self.__transactions
 
     def set_transactions(self, transactions):
         """
         Set client's transactions
         """
-        self.transactions = transactions
+        self.__transactions = transactions
 
     def __eq__(self, other_client):
         """
         Compares client usernames
         """
-        username_check = self.username == other_client.get_username()
+        username_check = self.__username == other_client.get_username()
         return username_check
