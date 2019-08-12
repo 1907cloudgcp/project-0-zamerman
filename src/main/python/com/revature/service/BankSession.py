@@ -1,8 +1,8 @@
-from .IOModels.Client import Client
-from .IOModels.ClientDAO import ClientDAO
-from .errors.ServiceErrors import LoginError, SessionError, OverdrawError
-from .logger.ServiceLogger import log_info, log_debug, log_error
-from .decorators import requires_client, requires_int, requires_positive
+from IO.Client import Client
+from IO.ClientDAO import ClientDAO
+from error.Error import LoginError, SessionError, OverdrawError
+from logger.Logger import log_info, log_debug, log_error
+from decorator import requires_client, requires_int, requires_positive
 
 class BankSession():
     """

@@ -1,8 +1,16 @@
+# import json library for json file loading and dumping
 import json
+
+# import os and sys libraries for path management
+import os
+import sys
+
+# Import custom errors, IO logger, and client models
 from .ClientDAO import ClientDAO
 from .Client import Client
-from .errors.IOErrors import ClientSetupError
-from .logger.IOLogger import log_info, log_debug, log_error
+from error.Error import ClientSetupError
+from logger.Logger import log_info, log_debug, log_error
+from decorator import requires_client
 
 class ClientDAOJSON(ClientDAO):
     """
@@ -36,6 +44,7 @@ class ClientDAOJSON(ClientDAO):
         log_debug("pulled list of Clients: " + str(clients))
         return clients
 
+    @requires_client
     def add_client(self, new_client):
         """
         adds a client to the vault unless that client is already in the vault
@@ -65,6 +74,7 @@ class ClientDAOJSON(ClientDAO):
 
         log_debug("added {0} to {1}".format(str(new_client), str(clients)))
 
+    @requires_client
     def update_client(self, client):
         """
         changes a client in the vault unless a client with the same username as
@@ -93,7 +103,7 @@ class ClientDAOJSON(ClientDAO):
 
         log_debug("updated {0}".format(str(client)))
 
-
+    @requires_client
     def delete_client(self, client):
         """
         deletes client from vault

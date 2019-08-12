@@ -1,6 +1,5 @@
-from .decorators import secure_string, requires_int, invalid_characters
-from .logger.IOLogger import log_info, log_debug
-
+from decorator import secure_string, requires_int, invalid_characters
+from logger.Logger import log_info, log_debug
 
 class Client():
     """

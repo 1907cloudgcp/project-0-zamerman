@@ -25,18 +25,18 @@ class InvalidCharacterError(Error):
     """
     pass
 
-class ClientRequiredError(ServiceError):
+class ClientRequiredError(Error):
     """
     Error raised when input is not client
     """
     pass
 
-class NegativeIntegerError(ServiceError):
+class NegativeIntegerError(Error):
     """
     Error raised when integer input is negative
     """
     pass
-    
+
 class ClientSetupError(Error):
     """
     Error raised when there are problems when adding or updating clients
@@ -49,7 +49,7 @@ class LoginError(Error):
     """
     pass
 
-class SessionError(ServiceError):
+class SessionError(Error):
     """
     Error raised when not logged in or registered
     """

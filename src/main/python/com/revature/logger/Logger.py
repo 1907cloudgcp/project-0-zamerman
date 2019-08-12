@@ -5,7 +5,7 @@ import yaml
 
 # Find logging.yaml config file relative to this file
 file_path = os.path.abspath(__file__)
-config_path = file_path.split('/')[:-6]
+config_path = file_path.split('/')[:-5]
 config_path.append('resources/logging.yaml')
 config_path = '/'.join(config_path)
 
@@ -19,7 +19,7 @@ if os.path.exists(config_path):
 else:
     raise ValueError('Logging configuration not found')
 
-logger = logging.getLogger('ServiceLogger')
+logger = logging.getLogger('BankLogger')
 
 
 def log_debug(debug_string):

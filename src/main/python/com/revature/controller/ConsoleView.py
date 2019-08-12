@@ -1,7 +1,6 @@
 from service.BankSession import BankSession
 from IO.Client import Client
-from error.Error import SessionError
-from IO.errors.IOErrors import ClientSetupError
+from error.Error import SessionError, ClientSetupError
 
 help_text = '''
 List of commands:
