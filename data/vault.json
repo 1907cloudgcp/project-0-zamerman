@@ -10,5 +10,17 @@
         "_Client__transactions": [],
         "_Client__balance": 10000,
         "_Client__password": "Ara71201"
+    },
+    {
+        "_Client__username": "mamerman",
+        "_Client__transactions": [],
+        "_Client__password": "zwa62094",
+        "_Client__balance": 10000
+    },
+    {
+        "_Client__username": "meichiunlee",
+        "_Client__balance": 10000,
+        "_Client__transactions": [],
+        "_Client__password": "zwa62094"
     }
 ]

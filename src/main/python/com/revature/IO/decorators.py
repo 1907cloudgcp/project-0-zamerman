@@ -1,4 +1,5 @@
-from .IOErrors import SecureStringError, IntegerRequiredError
+from .IOErrors import (SecureStringError, IntegerRequiredError,
+InvalidCharacterError)
 
 def secure_string(func):
     def func_wrapper(self, string):
@@ -17,4 +18,13 @@ def requires_int(func):
             return func(self, integer)
         else:
             raise IntegerRequiredError
+    return func_wrapper
+
+
+def invalid_characters(func):
+    def func_wrapper(self, string):
+        if " " in string:
+            raise InvalidCharacterError
+        else:
+            return func(self, string)
     return func_wrapper

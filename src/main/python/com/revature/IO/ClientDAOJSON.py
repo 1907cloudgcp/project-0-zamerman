@@ -1,9 +1,7 @@
+import json
 from .ClientDAO import ClientDAO
 from .Client import Client
-import json
-import sys
-import os
-from .IOErrors import ClientSetupError
+from .errors.IOErrors import ClientSetupError
 
 class ClientDAOJSON(ClientDAO):
     """
