@@ -2,6 +2,7 @@ import json
 from .ClientDAO import ClientDAO
 from .Client import Client
 from .errors.IOErrors import ClientSetupError
+from .logger.IOLogger import log_info, log_debug, log_error
 
 class ClientDAOJSON(ClientDAO):
     """
@@ -12,19 +13,27 @@ class ClientDAOJSON(ClientDAO):
         """
         vault_file : path to json vault file
         """
+
         self.vault_file = vault_file
+        log_info("instantiated ClientDAO for json file at: " + vault_file)
 
     def get_clients(self):
         """
         returns a list of clients in the vault
         """
+
+        # Securely load client dictionaries from json vault file
         with open(self.vault_file, 'r') as f:
             client_dicts = json.load(f)
+
+        # Create list of clients from client dictionaries
         clients = []
         for dict in client_dicts:
             new_client = Client()
             new_client.__dict__ = dict
             clients.append(new_client)
+
+        log_debug("pulled list of Clients: " + str(clients))
         return clients
 
     def add_client(self, new_client):
@@ -34,6 +43,9 @@ class ClientDAOJSON(ClientDAO):
         clients are uniquely identified by username so even if two clients with
         the same username have different passwords they are still considered
         the same
+
+        can raise a ClientSetupError if a client with the same username already
+        exists
         """
 
         # get a list of clients
@@ -41,6 +53,7 @@ class ClientDAOJSON(ClientDAO):
 
         # check if the client is already in the vault before adding
         if new_client in clients:
+            log_error("ClientSetupError: Client with same username already exists")
             raise ClientSetupError('Client with same username already exists')
         else:
             clients.append(new_client)
@@ -49,6 +62,8 @@ class ClientDAOJSON(ClientDAO):
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
+
+        log_debug("added {0} to {1}".format(str(new_client), str(clients)))
 
     def update_client(self, client):
         """
@@ -68,16 +83,15 @@ class ClientDAOJSON(ClientDAO):
         # remove old client
         clients.remove(client)
 
-        # check if the updated client is already in the vault before adding
-        if client in clients:
-            raise ClientSetupError('Client with same username already exists')
-        else:
-            clients.append(client)
+        # append updated client
+        clients.append(client)
 
         # write the updated vault list to the vault
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
+
+        log_debug("updated {0}".format(str(client)))
 
 
     def delete_client(self, client):
@@ -99,3 +113,5 @@ class ClientDAOJSON(ClientDAO):
         client_dicts = [client.__dict__ for client in clients]
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
+
+        log_debug("deleted {0}".format(str(client)))

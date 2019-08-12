@@ -19,7 +19,7 @@ if os.path.exists(config_path):
 else:
     raise ValueError('Logging configuration not found')
 
-logger = logging.getLogger('IOLogger')
+logger = logging.getLogger('ServiceLogger')
 
 
 def log_debug(debug_string):

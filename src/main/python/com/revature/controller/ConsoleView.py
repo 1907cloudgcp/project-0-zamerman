@@ -1,7 +1,7 @@
 from service.BankSession import BankSession
 from IO.Client import Client
 from error.Error import SessionError
-from IO.IOErrors import ClientSetupError
+from IO.errors.IOErrors import ClientSetupError
 
 help_text = '''
 List of commands:
@@ -100,7 +100,9 @@ class ConsoleView():
 
     def view_transactions_event(self):
         try:
-            self.bank.view_transactions()
+            transactions = self.bank.view_transactions()
+            for transaction in transactions:
+                print(transaction)
         except SessionError as e:
             print("SessionError:" + e.strerror)
         return self.run()

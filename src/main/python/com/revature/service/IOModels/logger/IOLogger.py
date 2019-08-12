@@ -5,7 +5,7 @@ import yaml
 
 # Find logging.yaml config file relative to this file
 file_path = os.path.abspath(__file__)
-config_path = file_path.split('/')[:-6]
+config_path = file_path.split('/')[:-7]
 config_path.append('resources/logging.yaml')
 config_path = '/'.join(config_path)
 
