@@ -86,6 +86,20 @@ class TestBankSession(unittest.TestCase):
         with self.assertRaises(SessionError):
             self.bank_session.deposit(5000)
 
+    def test_withdraw(self):
+        self.bank_session.register(Client('username', 'password', 10000))
+        self.bank_session.withdraw(5000)
+        self.assertEqual(self.bank_session.view_balance(), 5000)
+
+    def test_withdraw_session_error(self):
+        with self.assertRaises(SessionError):
+            self.bank_session.withdraw(5000)
+
+    def test_withdraw_overdraw_error(self):
+        self.bank_session.register(Client('username', 'password', 10000))
+        with self.assertRaises(OverdrawError):
+            self.bank_session.withdraw(50000)
+
 
 def main():
     # Configure Logger
