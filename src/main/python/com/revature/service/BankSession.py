@@ -33,15 +33,6 @@ class BankSession():
 
         return self.client.get_username()
 
-    def logout_session(self):
-        """
-        Logout of current session to a blank client
-        """
-
-        log.log_debug("logged out from current session to default")
-
-        self.client = Client()
-
     @requires_client
     def register(self, client):
         """
@@ -85,6 +76,15 @@ class BankSession():
         else:
             log.log_error("LoginError: Wrong username or password")
             raise LoginError("Wrong username or password")
+
+    def logout_session(self):
+        """
+        Logout of current session to a blank client
+        """
+
+        log.log_debug("logged out from current session to default")
+
+        self.client = Client()
 
     def view_balance(self):
         """

@@ -1,23 +1,4 @@
-import os
 import logging
-import logging.config
-import yaml
-
-# Find logging.yaml config file relative to this file
-file_path = os.path.abspath(__file__)
-config_path = file_path.split('/')[:-5]
-config_path.append('resources/logging.yaml')
-config_path = '/'.join(config_path)
-
-# Securely read and load yaml config file
-if os.path.exists(config_path):
-    with open(config_path, 'r') as f:
-        config = yaml.safe_load(f.read())
-
-    # Enable our loaded configuration
-    logging.config.dictConfig(config)
-else:
-    raise ValueError('Logging configuration not found')
 
 class Logger:
     def __init__(self, name):

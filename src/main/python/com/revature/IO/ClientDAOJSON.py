@@ -125,3 +125,15 @@ class ClientDAOJSON(ClientDAO):
             json.dump(client_dicts, f, indent=4)
 
         log.log_debug("deleted {0}".format(str(client)))
+
+    def clear_clients(self):
+        """
+        clear vault contents
+        """
+
+        # Write a blank list to the vault
+        cleared_vault = []
+        with open(self.vault_file, 'w') as f:
+            json.dump(cleared_vault, f, indent=4)
+
+        log.log_debug("cleared vault")

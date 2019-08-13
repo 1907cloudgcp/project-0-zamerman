@@ -4,16 +4,39 @@ from service.BankSession import BankSession
 from IO.ClientDAOJSON import ClientDAOJSON
 from logger.Logger import Logger
 import os
+import logging
+import logging.config
+import yaml
 
 '''
 This is your main script, this should call several other scripts within your
 packages.
 '''
 
-# Start logger
-log = Logger(__name__)
-
 def main():
+	# Configure Logger
+
+	# Find logging.yaml config file relative to this file
+	file_path = os.path.abspath(__file__)
+	config_path = file_path.split('/')[:-4]
+	config_path.append('resources/logging.yaml')
+	config_path = '/'.join(config_path)
+
+	# Securely read and load yaml config file
+	if os.path.exists(config_path):
+	    with open(config_path, 'r') as f:
+	        config = yaml.safe_load(f.read())
+
+	    # Enable our loaded configuration
+	    logging.config.dictConfig(config)
+	else:
+	    raise ValueError('Logging configuration not found')
+
+	# Start logger
+	log = Logger(__name__)
+	log.log_info("start logger")
+
+	# Start app
 	log.log_info("start bank app")
 
 	# Code to assemble and put together path to vault file relative to file

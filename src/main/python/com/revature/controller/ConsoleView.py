@@ -171,7 +171,7 @@ class ConsoleView():
         # Try to request the session balance
         try:
             # Request and print the session balance from BankSession instance
-            print('balance:' + str(self.session.view_balance()))
+            print('\nbalance:' + str(self.session.view_balance()))
 
         # Except SessionErrors for when our session is not registered or
         # logged in
@@ -190,6 +190,7 @@ class ConsoleView():
         # Try to deposit
         try:
             # Get user deposit and deposit with BankSession instance
+            print('')
             self.session.deposit(int(input('deposit (int):')))
 
         # Except for different errors
@@ -212,6 +213,7 @@ class ConsoleView():
         # Try to withdraw
         try:
             # Get user wihtdraw and withdraw with BankSession instance
+            print('')
             self.session.withdraw(int(input('withdraw (int):')))
 
         # Except for different errors
@@ -232,6 +234,7 @@ class ConsoleView():
         """
 
         try:
+            print('')
             transactions = self.session.view_transactions()
             for transaction in transactions:
                 print(transaction)
