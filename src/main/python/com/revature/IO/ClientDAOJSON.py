@@ -1,16 +1,14 @@
 # import json library for json file loading and dumping
 import json
 
-# import os and sys libraries for path management
-import os
-import sys
-
 # Import custom errors, IO logger, and client models
 from .ClientDAO import ClientDAO
-from .Client import Client
+from .Client import Client, requires_client
 from error.Error import ClientSetupError
-from logger.Logger import log_info, log_debug, log_error
-from decorator import requires_client
+from logger.Logger import Logger
+
+
+log = Logger(__name__)
 
 class ClientDAOJSON(ClientDAO):
     """
@@ -23,7 +21,9 @@ class ClientDAOJSON(ClientDAO):
         """
 
         self.vault_file = vault_file
-        log_info("instantiated ClientDAO for json file at: " + vault_file)
+
+        log_prefix = "instantiated ClientDAO for json file at: "
+        log.log_info(log_prefix + vault_file)
 
     def get_clients(self):
         """
@@ -41,7 +41,7 @@ class ClientDAOJSON(ClientDAO):
             new_client.__dict__ = dict
             clients.append(new_client)
 
-        log_debug("pulled list of Clients: " + str(clients))
+        log.log_debug("pulled list of Clients: " + str(clients))
         return clients
 
     @requires_client
@@ -62,7 +62,7 @@ class ClientDAOJSON(ClientDAO):
 
         # check if the client is already in the vault before adding
         if new_client in clients:
-            log_error("ClientSetupError: Client with same username already exists")
+            log.log_error("ClientSetupError: Client with same username already exists")
             raise ClientSetupError('Client with same username already exists')
         else:
             clients.append(new_client)
@@ -101,7 +101,7 @@ class ClientDAOJSON(ClientDAO):
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
 
-        log_debug("updated {0}".format(str(client)))
+        log.log_debug("updated {0}".format(str(client)))
 
     @requires_client
     def delete_client(self, client):
@@ -124,4 +124,4 @@ class ClientDAOJSON(ClientDAO):
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
 
-        log_debug("deleted {0}".format(str(client)))
+        log.log_debug("deleted {0}".format(str(client)))

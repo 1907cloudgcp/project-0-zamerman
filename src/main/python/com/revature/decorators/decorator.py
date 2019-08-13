@@ -1,22 +1,7 @@
-from logger.Logger import log_error
-from IO.Client import Client
-from error.Error import ClientRequiredError, IntegerRequiredError, NegativeIntegerError, InvalidCharacterError, SecureStringError
+from error.Error import IntegerRequiredError, NegativeIntegerError, SecureStringError, InvalidCharacterError
+from logger.Logger import Logger
 
-
-def requires_client(func):
-    """
-    Decorator function to check that decorated function has string field with
-    length 8 or greater. Also excepts empty strings.
-    """
-
-    def func_wrapper(self, client):
-        if type(client) == Client:
-            return func(self, client)
-        else:
-            log_error("ClientRequiredError: Argument must be client")
-            raise ClientRequiredError("Argument must be client")
-    return func_wrapper
-
+log = Logger(__name__)
 
 def requires_int(func):
     """
@@ -27,7 +12,7 @@ def requires_int(func):
         if type(integer) == int:
             return func(self, integer)
         else:
-            log_error("IntegerRequiredError: Integer input required")
+            log.log_error("IntegerRequiredError: Integer input required")
             raise IntegerRequiredError("Integer input required")
     return func_wrapper
 
@@ -38,15 +23,12 @@ def requires_positive(func):
     """
 
     def func_wrapper(self, integer):
-        if integer < 0:
+        if integer >= 0:
             return func(self, integer)
         else:
-            log_error("NegativeIntegerError: Positive integer required")
+            log.log_error("NegativeIntegerError: Positive integer required")
             raise NegativeIntegerError("Positive integer required")
     return func_wrapper
-# Import custom errors and IOLogger
-from error.Error import (SecureStringError, IntegerRequiredError, InvalidCharacterError)
-from logger.Logger import log_error
 
 
 def secure_string(func):
@@ -59,7 +41,7 @@ def secure_string(func):
         if string == '':
             return func(self, string)
         elif len(string) < 8:
-            log_error("SecureStringError: String must be length 8 or greater")
+            log.log_error("SecureStringError: String must be length 8 or greater")
             raise SecureStringError("String must be length 8 or greater")
         else:
             return func(self, string)
@@ -73,7 +55,7 @@ def invalid_characters(func):
 
     def func_wrapper(self, string):
         if " " in string:
-            log_error("InvalidCharacterError: No spaces in secured strings")
+            log.log_error("InvalidCharacterError: No spaces in secured strings")
             raise InvalidCharacterError("No spaces in strings")
         else:
             return func(self, string)

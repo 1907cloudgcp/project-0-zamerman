@@ -1,14 +1,20 @@
-from IO.Client import Client
+from IO.Client import Client, requires_client
 from IO.ClientDAO import ClientDAO
-from error.Error import LoginError, SessionError, OverdrawError
-from logger.Logger import log_info, log_debug, log_error
-from decorator import requires_client, requires_int, requires_positive
+from error.Error import LoginError, SessionError, OverdrawError, ClientRequiredError
+from logger.Logger import Logger
+from decorators.decorator import requires_int, requires_positive
+from datetime import datetime
+
+log = Logger(__name__)
+
 
 class BankSession():
     """
     Our service layer program which implements all the functionality we need
     for a session at the bank.
     """
+
+    datetime_format = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, client_dao, client=Client()):
         # set ClientDAO for session
@@ -18,14 +24,14 @@ class BankSession():
         # default is blank session
         self.client = client
 
-        log_info("instantiated BankSession object")
+        log.log_info("instantiated BankSession object")
 
     def current_session(self):
         """
         Returns the username of the current session
         """
 
-        log_debug("pulled current session username")
+        log.log_debug("pulled current session username")
 
         return self.client.get_username()
 
@@ -34,7 +40,7 @@ class BankSession():
         Logout of current session to a blank client
         """
 
-        log_debug("logged out from current session to default")
+        log.log_debug("logged out from current session to default")
 
         self.client = Client()
 
@@ -50,7 +56,7 @@ class BankSession():
         # Use login method to login as new client
         self.login(client)
 
-        log_debug("registed new client and logged in")
+        log.log_debug("registed new client and logged in")
 
     @requires_client
     def login(self, client):
@@ -70,16 +76,16 @@ class BankSession():
             pulled_client = clients[clients.index(client)]
             if client.get_password() == pulled_client.get_password():
                 self.client = pulled_client
-                log_debug("logged in as: " + str(pulled_client))
+                log.log_debug("logged in as: " + str(pulled_client))
 
             # if password is wrong raise LoginError
             else:
-                log_error("LoginError: Wrong username or password")
+                log.log_error("LoginError: Wrong username or password")
                 raise LoginError("Wrong username or password")
 
         # if client is not in ClientDAO raise LoginError
         else:
-            log_error("LoginError: Wrong username or password")
+            log.log_error("LoginError: Wrong username or password")
             raise LoginError("Wrong username or password")
 
     def view_balance(self):
@@ -92,12 +98,12 @@ class BankSession():
 
         # Check if we are logged in
         if self.client in self.client_dao.get_clients():
-            log_debug("viewed client balance")
+            log.log_debug("viewed client balance")
             return self.client.get_balance()
 
         # if client is not part of bank raise SessionError
         else:
-            log_error("SessionError: Not logged in or registered with bank")
+            log.log_error("SessionError: Not logged in or registered with bank")
             raise SessionError('Not logged in or registered with bank')
 
     @requires_int
@@ -117,17 +123,18 @@ class BankSession():
             self.client.set_balance(self.client.get_balance() + cash)
 
             # Adds to the clients transactions
-            record = "date: deposited: $" + str(cash)
+            record = datetime.now().strftime(datetime_format)
+            record += ": Deposit: $" + str(cash)
             self.client.get_transactions().append(record)
 
             # Updates client in vault
             self.client_dao.update_client(self.client)
 
-            log_debug("${0} deposited".format(str(cash)))
+            log.log_debug("${0} deposited".format(str(cash)))
 
         # If we are not logged into a vault account raises a SessionError
         else:
-            log_error("SessionError: Not logged in or registered with bank")
+            log.log_error("SessionError: Not logged in or registered with bank")
             raise SessionError('Not logged in or registered with bank')
 
     @requires_int
@@ -149,7 +156,7 @@ class BankSession():
             # Checks and raises a OverdrawError if client attempts to withdraw
             # more money than is in the account
             if cash > self.client.get_balance():
-                log_error("OverdrawError: Attempted to draw more than user's balance")
+                log.log_error("OverdrawError: Attempted to draw more than user's balance")
                 raise OverdrawError("Attempted to draw more than user's balance")
 
             # Performs withdraw
@@ -159,16 +166,17 @@ class BankSession():
                 self.client.set_balance(self.client.get_balance() - cash)
 
                 # Adds to transaction history
-                record = "date: withdrawn: $" + str(cash)
+                record = datetime.now().strftime(datetime_format)
+                record += ": Withdrawal: $" + str(cash)
                 self.client.get_transactions().append(record)
 
                 # Updates the client
                 self.client_dao.update_client(self.client)
-                log_debug("${0} withdrawn".format(str(cash)))
+                log.log_debug("${0} withdrawn".format(str(cash)))
 
         # If we are not logged into a vault account raises a SessionError
         else:
-            log_error("SessionError: Not logged in or registered with bank")
+            log.log_error("SessionError: Not logged in or registered with bank")
             raise SessionError('Not logged in or registered with bank')
 
     def view_transactions(self):
@@ -180,10 +188,10 @@ class BankSession():
 
         # Checks that we are logged in
         if self.client in self.client_dao.get_clients():
-            log_debug("BankSession: Pulled client transactions")
+            log.log_debug("Pulled client transactions")
             return self.client.get_transactions()
 
         # Raises error if we are not logged in
         else:
-            log_error("SessionError: Not logged in or registered with bank")
+            log.log_error("SessionError: Not logged in or registered with bank")
             raise SessionError('Not logged in or registered with bank')
