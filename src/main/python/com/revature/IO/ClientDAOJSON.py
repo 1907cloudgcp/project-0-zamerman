@@ -23,7 +23,7 @@ class ClientDAOJSON(ClientDAO):
         self.vault_file = vault_file
 
         log_prefix = "instantiated ClientDAO for json file at: "
-        log.log_info(log_prefix + vault_file)
+        log.log_debug(log_prefix + vault_file)
 
     def get_clients(self):
         """
@@ -72,7 +72,7 @@ class ClientDAOJSON(ClientDAO):
         with open(self.vault_file, 'w') as f:
             json.dump(client_dicts, f, indent=4)
 
-        log_debug("added {0} to {1}".format(str(new_client), str(clients)))
+        log.log_debug("added {0} to {1}".format(str(new_client), str(clients)))
 
     @requires_client
     def update_client(self, client):

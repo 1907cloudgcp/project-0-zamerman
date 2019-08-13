@@ -26,7 +26,7 @@ class Client():
 
         # log Client Creation
         log_format = "instantiated Client({0}, {1}, {2}, {3})"
-        log.log_info(log_format.format(username, password, balance, transactions))
+        log.log_debug(log_format.format(username, password, balance, transactions))
 
     def get_username(self):
         """
@@ -69,7 +69,7 @@ class Client():
         Get client's balance
         """
 
-        log.log_info("pulled Client balance: " + str(self.__balance))
+        log.log_debug("pulled Client balance: " + str(self.__balance))
         return self.__balance
 
     @requires_int

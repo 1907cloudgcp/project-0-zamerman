@@ -27,7 +27,7 @@ def requires_positive(func):
             return func(self, integer)
         else:
             log.log_error("NegativeIntegerError: Positive integer required")
-            raise NegativeIntegerError("Positive integer required")
+            raise NegativeIntegerError("Positive integer value required")
     return func_wrapper
 
 
@@ -41,8 +41,8 @@ def secure_string(func):
         if string == '':
             return func(self, string)
         elif len(string) < 8:
-            log.log_error("SecureStringError: String must be length 8 or greater")
-            raise SecureStringError("String must be length 8 or greater")
+            log.log_error("SecureStringError: Strings for usernames and passwords must be of length 8 or greater")
+            raise SecureStringError("Strings for usernames and passwords must be of length 8 or greater")
         else:
             return func(self, string)
     return func_wrapper
@@ -55,8 +55,8 @@ def invalid_characters(func):
 
     def func_wrapper(self, string):
         if " " in string:
-            log.log_error("InvalidCharacterError: No spaces in secured strings")
-            raise InvalidCharacterError("No spaces in strings")
+            log.log_error("InvalidCharacterError: No spaces in username or password strings")
+            raise InvalidCharacterError("No spaces in username or password strings")
         else:
             return func(self, string)
     return func_wrapper

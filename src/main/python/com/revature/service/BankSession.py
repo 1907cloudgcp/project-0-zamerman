@@ -6,15 +6,13 @@ from decorators.decorator import requires_int, requires_positive
 from datetime import datetime
 
 log = Logger(__name__)
-
+datetime_format = "%Y-%m-%d %H:%M:%S"
 
 class BankSession():
     """
     Our service layer program which implements all the functionality we need
     for a session at the bank.
     """
-
-    datetime_format = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, client_dao, client=Client()):
         # set ClientDAO for session
@@ -24,7 +22,7 @@ class BankSession():
         # default is blank session
         self.client = client
 
-        log.log_info("instantiated BankSession object")
+        log.log_debug("instantiated BankSession object")
 
     def current_session(self):
         """
