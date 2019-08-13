@@ -19,7 +19,8 @@ sys.path.insert(0, main_path)
 from IO.Client import Client
 from IO.ClientDAOJSON import ClientDAOJSON
 from service.BankSession import BankSession
-from error.Error import ClientSetupError, LoginError
+from error.Error import (ClientSetupError, LoginError, SessionError,
+OverdrawError)
 from logger.Logger import Logger
 
 class TestBankSession(unittest.TestCase):
@@ -75,6 +76,15 @@ class TestBankSession(unittest.TestCase):
     def test_view_balance(self):
         self.bank_session.register(Client('username', 'password', 10000))
         self.assertEqual(self.bank_session.view_balance(), 10000)
+
+    def test_deposit(self):
+        self.bank_session.register(Client('username', 'password', 10000))
+        self.bank_session.deposit(5000)
+        self.assertEqual(self.bank_session.view_balance(), 15000)
+
+    def test_deposit_session_error(self):
+        with self.assertRaises(SessionError):
+            self.bank_session.deposit(5000)
 
 
 def main():
