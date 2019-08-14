@@ -160,8 +160,8 @@ class BankSession():
             # Checks and raises a OverdrawError if client attempts to withdraw
             # more money than is in the account
             if cash > self.client.get_balance():
-                log.log_error("OverdrawError: Attempted to draw more than user's balance")
-                raise OverdrawError("Attempted to draw more than user's balance")
+                log.log_error("OverdrawError: Attempted to withdraw more than user's balance")
+                raise OverdrawError("Attempted to withdraw more than user's balance")
 
             # Performs withdraw
             else:
