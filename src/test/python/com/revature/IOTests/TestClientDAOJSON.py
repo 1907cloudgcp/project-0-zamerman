@@ -27,7 +27,7 @@ class TestClientDAOJSON(unittest.TestCase):
         # Code to assemble and put together path to vault file relative to file
     	file_path = os.path.abspath(__file__)
     	vault_path = file_path.split('/')[:-7]
-    	vault_path.append('data/vault.json')
+    	vault_path.append('data/vault_test.json')
     	self.vault_path = '/'.join(vault_path)
 
     	# Instantiate a ClientDAO for json files
