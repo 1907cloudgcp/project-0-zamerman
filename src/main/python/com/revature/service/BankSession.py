@@ -39,6 +39,12 @@ class BankSession():
         Registers a new client and logs in as that client
         """
 
+        # Create transaction entry for account creation
+        record = datetime.now().strftime(datetime_format)
+        record += ": Created account with balance of: $"
+        record += str(client.get_balance())
+        client.set_transactions([record])
+
         # Instruct ClientDAO to add client
         self.client_dao.add_client(client)
 
