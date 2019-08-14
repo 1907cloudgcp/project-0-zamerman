@@ -101,8 +101,9 @@ class TestBankSession(unittest.TestCase):
             self.bank_session.withdraw(50000)
 
     def test_view_transactions(self):
-        self.bank_session.register(Client('username', 'password', transactions=['transaction']))
-        self.assertEqual(self.bank_session.view_transactions(), ['transaction'])
+        self.bank_session.register(Client('username', 'password', 10000))
+        self.assertEqual(self.bank_session.view_transactions(),
+                         self.bank_session.client.get_transactions())
 
 
 def main():
