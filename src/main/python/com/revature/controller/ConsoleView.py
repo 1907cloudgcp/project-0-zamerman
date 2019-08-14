@@ -224,7 +224,7 @@ class ConsoleView():
         except ValueError as e:
             log.log_error("ValueError: Balance must be of type int")
         except OverdrawError as e:
-            log.log_error("OverdrawError: " + e.strerror")
+            log.log_error("OverdrawError: " + e.strerror)
 
         # Redirect back to run for futher responses
         log.log_info("finished response to withdraw request")
