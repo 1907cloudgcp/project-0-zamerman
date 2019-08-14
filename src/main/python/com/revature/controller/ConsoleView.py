@@ -1,7 +1,7 @@
 from service.BankSession import BankSession
 from IO.Client import Client
 from error.Error import (SessionError, ClientSetupError, SecureStringError,
-InvalidCharacterError, NegativeIntegerError)
+InvalidCharacterError, NegativeIntegerError, OverdrawError)
 from logger.Logger import Logger
 
 help_text = '''
@@ -223,6 +223,8 @@ class ConsoleView():
             log.log_error("NegativeIntegerError: " + e.strerror)
         except ValueError as e:
             log.log_error("ValueError: Balance must be of type int")
+        except OverdrawError as e:
+            log.log_error("OverdrawError: " + e.strerror")
 
         # Redirect back to run for futher responses
         log.log_info("finished response to withdraw request")
